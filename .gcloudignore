@@ -1,0 +1,8 @@
+# Unnecessary files
+.git
+dist
+node_modules
+vendor
+*.jar
+.runtimeconfig.json
+.env

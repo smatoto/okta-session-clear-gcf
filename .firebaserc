@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "gapps-dev-okta-demo",
+    "dev": "gapps-dev-okta-demo"
+  },
+  "targets": {}
+}

@@ -1,0 +1,23 @@
+steps:
+  # Install dependencies
+  - name: 'node:14-alpine'
+    entrypoint: npm
+    dir: 'functions'
+    args: ['install']
+  # Build the functions project
+  - name: 'node:14-alpine'
+    entrypoint: npm
+    dir: 'functions'
+    args: ['run', 'build']
+  # Set the functions config
+  - name: gcr.io/${_PROJECT_ID}/firebase
+    dir: 'functions'
+    args: ['functions:config:set', '--project', '${_PROJECT_ID}', 'app.env=${_NODE_ENV}', 'app.region=${_REGION}', 'app.okta_base_url=${_BASE_URL}']
+  # Deploy the functions project
+  - name: gcr.io/${_PROJECT_ID}/firebase
+    dir: 'functions'
+    args: ['deploy', '--project', '${_PROJECT_ID}', '--only=functions', '--debug']
+options:
+  logging: CLOUD_LOGGING_ONLY
+serviceAccount: ${_CLOUD_BUILD_SERVICE_ACCOUNT}
+timeout: 900s
